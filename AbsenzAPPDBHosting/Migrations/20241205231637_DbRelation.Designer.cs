@@ -4,6 +4,7 @@ using AbsenzAPPDBHosting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AbsenzAPPDBHosting.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241205231637_DbRelation")]
+    partial class DbRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,16 +33,16 @@ namespace AbsenzAPPDBHosting.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AbsenzgrundId")
+                    b.Property<int>("Absenzgrund")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Datum")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LehrerId")
+                    b.Property<int>("Lehrer")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModulId")
+                    b.Property<int>("Modul")
                         .HasColumnType("int");
 
                     b.Property<string>("Notiz")
@@ -50,12 +53,6 @@ namespace AbsenzAPPDBHosting.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AbsenzgrundId");
-
-                    b.HasIndex("LehrerId");
-
-                    b.HasIndex("ModulId");
 
                     b.HasIndex("SchuelerId");
 
@@ -94,29 +91,6 @@ namespace AbsenzAPPDBHosting.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admin");
-                });
-
-            modelBuilder.Entity("AbsenzAPPDBHosting.Models.CrossSchuelerEltern", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ID_ElternId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ID_SchuelerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ID_ElternId");
-
-                    b.HasIndex("ID_SchuelerId");
-
-                    b.ToTable("CrossSchuelerEltern");
                 });
 
             modelBuilder.Entity("AbsenzAPPDBHosting.Models.Eltern", b =>
@@ -215,83 +189,18 @@ namespace AbsenzAPPDBHosting.Migrations
 
             modelBuilder.Entity("AbsenzAPPDBHosting.Models.Absenzen", b =>
                 {
-                    b.HasOne("AbsenzAPPDBHosting.Models.Absenzgruende", "Absenzgrund")
-                        .WithMany("Absenzen")
-                        .HasForeignKey("AbsenzgrundId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AbsenzAPPDBHosting.Models.Lehrer", "Lehrer")
-                        .WithMany("Absenzen")
-                        .HasForeignKey("LehrerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AbsenzAPPDBHosting.Models.Module", "Modul")
-                        .WithMany("Absenzen")
-                        .HasForeignKey("ModulId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AbsenzAPPDBHosting.Models.Schueler", "Schueler")
                         .WithMany("Absenzen")
                         .HasForeignKey("SchuelerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Absenzgrund");
-
-                    b.Navigation("Lehrer");
-
-                    b.Navigation("Modul");
-
                     b.Navigation("Schueler");
-                });
-
-            modelBuilder.Entity("AbsenzAPPDBHosting.Models.CrossSchuelerEltern", b =>
-                {
-                    b.HasOne("AbsenzAPPDBHosting.Models.Eltern", "ID_Eltern")
-                        .WithMany("CrossSchuelerEltern")
-                        .HasForeignKey("ID_ElternId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AbsenzAPPDBHosting.Models.Schueler", "ID_Schueler")
-                        .WithMany("CrossSchuelerEltern")
-                        .HasForeignKey("ID_SchuelerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ID_Eltern");
-
-                    b.Navigation("ID_Schueler");
-                });
-
-            modelBuilder.Entity("AbsenzAPPDBHosting.Models.Absenzgruende", b =>
-                {
-                    b.Navigation("Absenzen");
-                });
-
-            modelBuilder.Entity("AbsenzAPPDBHosting.Models.Eltern", b =>
-                {
-                    b.Navigation("CrossSchuelerEltern");
-                });
-
-            modelBuilder.Entity("AbsenzAPPDBHosting.Models.Lehrer", b =>
-                {
-                    b.Navigation("Absenzen");
-                });
-
-            modelBuilder.Entity("AbsenzAPPDBHosting.Models.Module", b =>
-                {
-                    b.Navigation("Absenzen");
                 });
 
             modelBuilder.Entity("AbsenzAPPDBHosting.Models.Schueler", b =>
                 {
                     b.Navigation("Absenzen");
-
-                    b.Navigation("CrossSchuelerEltern");
                 });
 #pragma warning restore 612, 618
         }

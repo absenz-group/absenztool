@@ -8,5 +8,7 @@ namespace AbsenzAPPDBHosting.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Handynummer { get; set; }
+
+        public ICollection<CrossSchuelerEltern> CrossSchuelerEltern { get; set; }
     }
 }

@@ -17,5 +17,6 @@ namespace AbsenzAPPDBHosting.Data
         public DbSet<Lehrer> Lehrer { get; set; }
         public DbSet<Module> Module { get; set; }
         public DbSet<Schueler> Schueler { get; set; }
+        public DbSet<CrossSchuelerEltern> CrossSchuelerEltern { get; set; }
     }
 }

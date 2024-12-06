@@ -8,5 +8,7 @@ namespace AbsenzAPPDBHosting.Models
         public int Id { get; set; }
 
         public string Grund { get; set; }
+
+        public ICollection<Absenzen> Absenzen { get; set; }
     }
 }

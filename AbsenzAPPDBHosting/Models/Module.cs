@@ -7,5 +7,7 @@ namespace AbsenzAPPDBHosting.Models
         [Key]
         public int Id { get; set; }
         public string Modul {  get; set; }
+
+        public ICollection<Absenzen> Absenzen { get; set; }
     }
 }

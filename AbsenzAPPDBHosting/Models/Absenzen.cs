@@ -6,10 +6,11 @@ namespace AbsenzAPPDBHosting.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Schueler { get; set; }
+        public Schueler Schueler { get; set; }
+        public Absenzgruende Absenzgrund { get; set; }
+        public Module Modul { get; set; }
+        public Lehrer Lehrer { get; set; }
+        public string Notiz { get; set; }
         public DateTime Datum { get; set; }
-        public string Absenzgrund { get; set; }
-        public string Lehrer { get; set; }
-        public int Modul { get; set; }
     }
 }
