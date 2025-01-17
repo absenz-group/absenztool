@@ -1,10 +1,26 @@
-﻿@namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
+﻿@using AbsenzAPPDBHosting.BusinessLogic2
+@using AbsenzAPPDBHosting.Models.SchulerAbsenzUbersicht
+@namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
 
 
 
 <h2>Schüleransicht</h2>
-<p>Welcome to the Schüleransicht component!</p>
+
+<div class="row">
+	<div class="col-6">
+		<p>@_xxx.Name</p>
+	</div>
+</div>
+
+
 
 @code {
+
+	public SchulerUbersicht _xxx = new SchulerUbersicht();
+
+	public void GetInfos()
+	{
+		_xxx = new SchulerUbersicht();
+	}
 
 }
