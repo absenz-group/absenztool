@@ -2,6 +2,7 @@ using AbsenzAPPDBHosting.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorComponents();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

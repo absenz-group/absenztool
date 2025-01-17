@@ -6,7 +6,8 @@ namespace AbsenzAPPDBHosting.Controllers
     {
         public IActionResult Index()
         {
-            return View("GesamtUbersicht");
+            return View("~/Views/SchulerAbsenzUbersicht/GesamtUbersicht.cshtml");
         }
+
     }
 }
