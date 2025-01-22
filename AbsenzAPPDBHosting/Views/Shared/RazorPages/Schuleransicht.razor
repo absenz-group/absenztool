@@ -9,12 +9,10 @@
 
 <div class="row">
 	<div class="col-6">
-		@if(_schulerliste != null)
+		@if (schuler1 != null)
 		{
-			foreach (Schueler schuler in _schulerliste)
-			{
-				<p>@schuler.Name</p>
-			}
+			<p>@schuler1.Id</p>
+			<p>@schuler1.Name</p>
 		}
 	</div>
 </div>
@@ -23,12 +21,12 @@
 
 @code {
 
-	List<Schueler> _schulerliste;
+	SchulerUbersicht schuler1;
 
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-		//_schulerliste = _schulerLogic.GetSchulerdata();
+		schuler1 = _schulerLogic.GetSchulerdata();
 	}
 
 

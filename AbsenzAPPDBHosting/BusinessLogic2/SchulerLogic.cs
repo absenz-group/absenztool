@@ -9,7 +9,7 @@ namespace AbsenzAPPDBHosting.BusinessLogic2
     {
         private readonly ApplicationDbContext _context;
 
-        int _schulerId = 999;
+        int _schulerId = 30300;
 
 
 
@@ -27,9 +27,7 @@ namespace AbsenzAPPDBHosting.BusinessLogic2
             try
             {
 
-                Schueler schuler1 = new Schueler();
-                schuler1 = _context.Schueler.FirstOrDefault(s => s.Id == _schulerId);
-
+                Schueler schuler1 = _context.Schueler.FirstOrDefault(s => s.Id == _schulerId);
 
                 schulerUbersicht = new SchulerUbersicht()
                 {
