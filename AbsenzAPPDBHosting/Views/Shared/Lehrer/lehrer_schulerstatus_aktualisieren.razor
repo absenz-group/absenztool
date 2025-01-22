@@ -1,0 +1,80 @@
+@using AbsenzAPPDBHosting.Models
+@inject LehrerLogic _lehrerLogic;
+
+<h2 class="text-center my-4">Status bearbeiten für @SchuelerName</h2>
+
+<div class="container">
+    <!-- Abwesenheiten -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h4 class="text-primary">Abwesenheiten</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (ModuleListe != null && ModuleListe.Any())
+        {
+            foreach (var modul in ModuleListe)
+            {
+                <div class="col-12 my-2">
+                    <div class="d-flex justify-content-between align-items-center border rounded shadow-sm p-3 bg-light">
+                        <span class="fw-bold">Modul: @modul.ModulName</span>
+                        <span class="d-flex gap-2">
+                            <button class="btn btn-danger btn-sm" @onclick="() => MarkAbwesend(modul.Id)">
+                                Abwesend
+                            </button>
+                            <button class="btn btn-success btn-sm" @onclick="() => MarkAnwesend(modul.Id)">
+                                Anwesend
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info text-center" role="alert">
+                    Keine Module gefunden.
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Speichern -->
+    <div class="row mt-4">
+        <div class="col text-center">
+            <button class="btn btn-primary btn-lg shadow-sm" @onclick="SaveStatus">
+                Speichern
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    string SchuelerName;
+    List<Modul> ModuleListe;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var schuelerDetails = _lehrerLogic.GetSchuelerDetails();
+        SchuelerName = schuelerDetails.Name;
+        ModuleListe = schuelerDetails.ModuleListe;
+    }
+
+    private void MarkAbwesend(int modulId)
+    {
+        _lehrerLogic.MarkAbwesend(modulId);
+    }
+
+    private void MarkAnwesend(int modulId)
+    {
+        _lehrerLogic.MarkAnwesend(modulId);
+    }
+
+    private void SaveStatus()
+    {
+        _lehrerLogic.SaveStatus();
+    }
+}

@@ -1,0 +1,62 @@
+@using AbsenzAPPDBHosting.BusinessLogic2
+@namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
+@inject LehrerLogic _lehrerLogic;
+
+<h2 class="text-center my-4">Lehrer: Schülerübersicht</h2>
+
+<div class="container">
+    <!-- Filter-Eingabe -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <input type="text" placeholder="Filter: Name, Klasse" 
+                   class="form-control shadow-sm" 
+                   @oninput="FilterSchueler" />
+            @* Eingabefeld für Filter *@
+        </div>
+    </div>
+
+    <!-- Schülerliste -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <ul class="list-group shadow-sm">
+                @if (SchuelerListe != null && SchuelerListe.Any())
+                {
+                    foreach (var schueler in SchuelerListe)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">@schueler.Name</span>
+                            <span class="text-muted">(@schueler.Klasse)</span>
+                            <a href="@($"/Lehrer/Status?schuelerId={schueler.Id}")" 
+                               class="btn btn-primary btn-sm">
+                                Status bearbeiten
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item text-center text-muted">
+                        Keine Schüler gefunden.
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@code {
+    List<Schueler> SchuelerListe = new();
+    string Filter = "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        SchuelerListe = _lehrerLogic.GetAllSchueler();
+    }
+
+    private void FilterSchueler(ChangeEventArgs e)
+    {
+        Filter = e.Value.ToString();
+        SchuelerListe = _lehrerLogic.FilterSchueler(Filter);
+    }
+}

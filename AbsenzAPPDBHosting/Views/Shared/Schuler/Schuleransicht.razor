@@ -1,0 +1,84 @@
+﻿@using AbsenzAPPDBHosting.BusinessLogic2
+@using AbsenzAPPDBHosting.Models
+@using AbsenzAPPDBHosting.Models.SchulerAbsenzUbersicht
+@namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
+@inject SchulerLogic _schulerLogic;
+
+<h2 class="text-center my-4">Schüleransicht</h2>
+
+<div class="container">
+    <!-- Schülerinformationen -->
+    <div class="row">
+        <div class="col text-center">
+            <h3 class="text-primary">Schüler: @SchuelerName</h3>
+        </div>
+    </div>
+
+    <!-- Zusammenfassung der Absenzen -->
+    <div class="row my-3">
+        <div class="col-6 text-center">
+            <div class="border p-3 rounded shadow-sm bg-light">
+                <span class="fw-bold">Entschuldigt:</span> @EntschuldigtAnzahl
+            </div>
+        </div>
+        <div class="col-6 text-center">
+            <div class="border p-3 rounded shadow-sm bg-light">
+                <span class="fw-bold">Unentschuldigt:</span> @UnentschuldigtAnzahl
+            </div>
+        </div>
+    </div>
+
+    <!-- Absenzenübersicht -->
+    <div class="row my-3">
+        <div class="col text-center">
+            <h4 class="text-secondary">Auflistung aller Absenzen</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (ModuleList != null && ModuleList.Any())
+        {
+            foreach (var modul in ModuleList)
+            {
+                <div class="col-12 my-2">
+                    <div class="d-flex justify-content-between align-items-center border rounded p-3 shadow-sm bg-light">
+                        <span><strong>Modul:</strong> @modul.ModulName</span>
+                        <span>
+                            <strong>Absenzen:</strong> Entschuldigt (@modul.Entschuldigt) /
+                            Unentschuldigt (@modul.Unentschuldigt)
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info text-center" role="alert">
+                    Keine Module gefunden.
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    string SchuelerName;
+    int EntschuldigtAnzahl;
+    int UnentschuldigtAnzahl;
+    List<Modul> ModuleList;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var schuelerData = _schulerLogic.GetSchulerdata();
+        if (schuelerData != null && schuelerData.Count > 0)
+        {
+            var schueler = schuelerData.First();
+            SchuelerName = schueler.Name;
+            EntschuldigtAnzahl = schueler.EntschuldigtAnzahl;
+            UnentschuldigtAnzahl = schueler.UnentschuldigtAnzahl;
+            ModuleList = schueler.ModuleList;
+        }
+    }
+}

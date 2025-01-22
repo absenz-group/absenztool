@@ -1,0 +1,66 @@
+@using AbsenzAPPDBHosting.BusinessLogic2
+@namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
+@inject AdminLogic _adminLogic;
+
+<h2 class="text-center my-4">Admin: Schülerübersicht</h2>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <input type="text" placeholder="Filter: Name, Klasse" class="form-control" @oninput="FilterSchueler" />
+            @* Textfeld zum Filtern von Schülern nach Name oder Klasse, ruft die Razor-Methode "FilterSchueler" auf *@
+        </div>
+    </div>
+
+    <div class="row">
+        @if (SchuelerListe != null && SchuelerListe.Any())
+        {
+            foreach (var schueler in SchuelerListe)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">@schueler.Name</h5>
+                            <p class="card-text">
+                                <strong>Klasse:</strong> @schueler.Klasse
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <a href="@($"/Admin/Details?schuelerId={schueler.Id}")" class="btn btn-primary btn-sm">
+                                    Details ansehen
+                                </a>
+                                <a href="@($"/Admin/Deaktivieren?schuelerId={schueler.Id}")" class="btn btn-danger btn-sm">
+                                    Deaktivieren
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <div class="alert alert-warning" role="alert">
+                    Keine Schüler gefunden.
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    List<Schueler> SchuelerListe = new();
+    string Filter = "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        SchuelerListe = _adminLogic.GetAllSchueler();
+    }
+
+    private void FilterSchueler(ChangeEventArgs e)
+    {
+        Filter = e.Value.ToString();
+        SchuelerListe = _adminLogic.FilterSchueler(Filter);
+    }
+}

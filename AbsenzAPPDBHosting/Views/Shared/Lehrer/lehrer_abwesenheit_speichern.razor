@@ -1,0 +1,49 @@
+@inject LehrerLogic _lehrerLogic;
+
+<h2 class="text-center my-4">Abwesenheit eintragen</h2>
+
+<div class="container">
+    <!-- Formular für Abwesenheit -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Datum -->
+                    <div class="mb-3">
+                        <label for="datum" class="form-label fw-bold">Datum</label>
+                        <input type="date" id="datum" class="form-control" @bind="Datum" />
+                    </div>
+
+                    <!-- Lektion -->
+                    <div class="mb-3">
+                        <label for="lektion" class="form-label fw-bold">Lektion</label>
+                        <input type="text" id="lektion" class="form-control" 
+                               placeholder="08:15 - 09:00, 09:05 - 09:50" @bind="Lektion" />
+                    </div>
+
+                    <!-- Grund -->
+                    <div class="mb-3">
+                        <label for="grund" class="form-label fw-bold">Grund</label>
+                        <textarea id="grund" class="form-control" placeholder="Grund eingeben..." @bind="Grund"></textarea>
+                    </div>
+
+                    <!-- Speichern-Button -->
+                    <div class="text-center">
+                        <button class="btn btn-primary" @onclick="SaveAbwesenheit">Speichern</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    DateTime Datum = DateTime.Now;
+    string Lektion = "";
+    string Grund = "";
+
+    private void SaveAbwesenheit()
+    {
+        _lehrerLogic.SaveAbwesenheit(Datum, Lektion, Grund);
+    }
+}

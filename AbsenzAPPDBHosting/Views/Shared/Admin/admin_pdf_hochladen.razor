@@ -1,0 +1,35 @@
+@inject AdminLogic _adminLogic;
+
+<h2>PDF Hochladen</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <input type="file" @onchange="HandleFileUpload" />
+            @* Datei-Upload-Eingabe, die die Razor-Methode "HandleFileUpload" aufruft *@
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col text-center">
+            <button class="btn btn-primary" @onclick="UploadPDF">PDF Hochladen</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IBrowserFile UploadedFile;
+
+    private void HandleFileUpload(InputFileChangeEventArgs e)
+    {
+        UploadedFile = e.File;
+    }
+
+    private async Task UploadPDF()
+    {
+        if (UploadedFile != null)
+        {
+            await _adminLogic.UploadPDFAsync(UploadedFile);
+        }
+    }
+}

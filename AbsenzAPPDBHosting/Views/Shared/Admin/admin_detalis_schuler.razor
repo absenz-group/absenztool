@@ -1,0 +1,88 @@
+@using AbsenzAPPDBHosting.Models
+@inject AdminLogic _adminLogic;
+
+<h2 class="text-center my-4">Details von @SchuelerName</h2>
+
+<div class="container">
+    <!-- Übersicht der entschuldigten und unentschuldigten Absenzen -->
+    <div class="row mb-4">
+        <div class="col-6">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Entschuldigt</h5>
+                    <p class="card-text display-6">@EntschuldigtAnzahl</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">Unentschuldigt</h5>
+                    <p class="card-text display-6">@UnentschuldigtAnzahl</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Überschrift für die Modul-Liste -->
+    <div class="row my-3">
+        <div class="col text-center">
+            <h4 class="text-primary">Absenzen und Aktionen</h4>
+        </div>
+    </div>
+
+    <!-- Liste der Module -->
+    <div class="row">
+        @if (ModuleListe != null && ModuleListe.Any())
+        {
+            foreach (var modul in ModuleListe)
+            {
+                <div class="col-12 mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
+                            <div class="mb-3 mb-md-0">
+                                <h5 class="card-title">Modul: @modul.ModulName</h5>
+                                <p class="card-text">
+                                    Absenzen: 
+                                    <span class="text-success">Entschuldigt (@modul.Entschuldigt)</span> / 
+                                    <span class="text-danger">Unentschuldigt (@modul.Unentschuldigt)</span>
+                                </p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="@($"/Admin/Entschuldigen?modulId={modul.Id}")" class="btn btn-primary btn-sm">Entschuldigen</a>
+                                <a href="@($"/Admin/Deaktivieren?modulId={modul.Id}")" class="btn btn-danger btn-sm">Deaktivieren</a>
+                                <a href="@($"/Admin/Aktivieren?modulId={modul.Id}")" class="btn btn-success btn-sm">Aktivieren</a>
+                                <a href="@($"/Admin/Aktualisieren?modulId={modul.Id}")" class="btn btn-secondary btn-sm">PDF ansehen</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <div class="alert alert-warning" role="alert">
+                    Keine Module verfügbar.
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    string SchuelerName;
+    int EntschuldigtAnzahl;
+    int UnentschuldigtAnzahl;
+    List<Modul> ModuleListe;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var schuelerDetails = _adminLogic.GetSchuelerDetails();
+        SchuelerName = schuelerDetails.Name;
+        EntschuldigtAnzahl = schuelerDetails.EntschuldigtAnzahl;
+        UnentschuldigtAnzahl = schuelerDetails.UnentschuldigtAnzahl;
+        ModuleListe = schuelerDetails.ModuleListe;
+    }
+}
