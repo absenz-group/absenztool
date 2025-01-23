@@ -1,5 +1,6 @@
+@using AbsenzAPPDBHosting.BusinessLogic2
 @using AbsenzAPPDBHosting.Models
-@inject LehrerLogic _lehrerLogic;
+@inject SchulerLogic _schulerLogic;
 
 <h2 class="text-center my-4">Status bearbeiten für @SchuelerName</h2>
 
@@ -18,12 +19,12 @@
             {
                 <div class="col-12 my-2">
                     <div class="d-flex justify-content-between align-items-center border rounded shadow-sm p-3 bg-light">
-                        <span class="fw-bold">Modul: @modul.ModulName</span>
+                        <span class="fw-bold">Modul: @modul.Modul</span>
                         <span class="d-flex gap-2">
-                            <button class="btn btn-danger btn-sm" @onclick="() => MarkAbwesend(modul.Id)">
+                            <button class="btn btn-danger btn-sm">
                                 Abwesend
                             </button>
-                            <button class="btn btn-success btn-sm" @onclick="() => MarkAnwesend(modul.Id)">
+                            <button class="btn btn-success btn-sm">
                                 Anwesend
                             </button>
                         </span>
@@ -44,7 +45,7 @@
     <!-- Speichern -->
     <div class="row mt-4">
         <div class="col text-center">
-            <button class="btn btn-primary btn-lg shadow-sm" @onclick="SaveStatus">
+            <button class="btn btn-primary btn-lg shadow-sm">
                 Speichern
             </button>
         </div>
@@ -53,28 +54,40 @@
 
 @code {
     string SchuelerName;
-    List<Modul> ModuleListe;
+    List<Module> ModuleListe;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        var schuelerDetails = _lehrerLogic.GetSchuelerDetails();
-        SchuelerName = schuelerDetails.Name;
-        ModuleListe = schuelerDetails.ModuleListe;
+
+        var schuelerDetails = _schulerLogic.GetData();
+
+        if (schuelerDetails != null)
+        {
+            SchuelerName = schuelerDetails.Name;
+            // ModuleListe = schuelerDetails.ModuleListe;
+        }
+        else
+        {
+            // Handle case where no student is found
+            SchuelerName = "Unbekannter Schüler";
+            ModuleListe = new List<Module>();
+        }
     }
 
-    private void MarkAbwesend(int modulId)
-    {
-        _lehrerLogic.MarkAbwesend(modulId);
-    }
-
-    private void MarkAnwesend(int modulId)
-    {
-        _lehrerLogic.MarkAnwesend(modulId);
-    }
-
-    private void SaveStatus()
-    {
-        _lehrerLogic.SaveStatus();
-    }
+    //
+    // private void MarkAbwesend(int modulId)
+    // {
+    //     _lehrerLogic.MarkAbwesend(modulId);
+    // }
+    //
+    // private void MarkAnwesend(int modulId)
+    // {
+    //     _lehrerLogic.MarkAnwesend(modulId);
+    // }
+    //
+    // private void SaveStatus()
+    // {
+    //     _lehrerLogic.SaveStatus();
+    // }
 }

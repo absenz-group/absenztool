@@ -4,9 +4,6 @@
 
 <h3>LehrerFilter</h3>
 
-
-
-
 @if (_schulerliste != null)
 {
 	foreach (Schueler schuler in _schulerliste)
@@ -15,9 +12,6 @@
 		<br />
 	}
 }
-
-
-
 
 @if(_openModal)
 {
@@ -36,8 +30,7 @@
 							<option value="@absenzgrund.Id">@absenzgrund.Grund</option>
 						}
 					</select>
-
-
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -48,19 +41,13 @@
 	</div>
 }
 
-
-
 @code
 {
-
 	List<Schueler> _schulerliste;
-
 	List<Absenzgruende> _absenzGruendeListe;
-
-
+	
 	bool _openModal;
-
-
+	
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
@@ -68,19 +55,13 @@
 		_schulerliste = _leherlogic.GetSchulerListe();
 		_openModal = false;
 	}
-
-
+	
 	public void OpenModalAbsenzen(int schulerId)
 	{
 		_openModal = true;
 
 		_absenzGruendeListe = _leherlogic.GetAbsenzgruende();
 
-
-
-
 		Absenzen absenz = new Absenzen();
 	}
-
-
 }

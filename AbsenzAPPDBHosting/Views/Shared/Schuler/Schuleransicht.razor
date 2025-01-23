@@ -42,10 +42,10 @@
             {
                 <div class="col-12 my-2">
                     <div class="d-flex justify-content-between align-items-center border rounded p-3 shadow-sm bg-light">
-                        <span><strong>Modul:</strong> @modul.ModulName</span>
+                        <span><strong>Modul:</strong> @modul.Modul</span>
                         <span>
-                            <strong>Absenzen:</strong> Entschuldigt (@modul.Entschuldigt) /
-                            Unentschuldigt (@modul.Unentschuldigt)
+                            @* <strong>Absenzen:</strong> Entschuldigt (@modul.Entschuldigt) / *@
+                            @* Unentschuldigt (@modul.Unentschuldigt) *@
                         </span>
                     </div>
                 </div>
@@ -66,18 +66,18 @@
     string SchuelerName;
     int EntschuldigtAnzahl;
     int UnentschuldigtAnzahl;
-    List<Modul> ModuleList;
+    List<Module> ModuleList;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        var schuelerData = _schulerLogic.GetSchulerdata();
-        if (schuelerData != null && schuelerData.Count > 0)
+        var schuelerData = _schulerLogic.GetData();
+        if (schuelerData != null)
         {
-            var schueler = schuelerData.First();
+            var schueler = schuelerData;
             SchuelerName = schueler.Name;
-            EntschuldigtAnzahl = schueler.EntschuldigtAnzahl;
-            UnentschuldigtAnzahl = schueler.UnentschuldigtAnzahl;
+            EntschuldigtAnzahl = schueler.EntschuldigtCount;
+            UnentschuldigtAnzahl = schueler.UnentschuldigtCount;
             ModuleList = schueler.ModuleList;
         }
     }

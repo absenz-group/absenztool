@@ -1,6 +1,9 @@
 @using AbsenzAPPDBHosting.BusinessLogic2
+@using AbsenzAPPDBHosting.Models
 @namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
 @inject AdminLogic _adminLogic;
+
+@page "/Admin/AdminAlleSchueler"
 
 <h2 class="text-center my-4">Admin: Schülerübersicht</h2>
 
@@ -22,7 +25,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-primary">@schueler.Name</h5>
                             <p class="card-text">
-                                <strong>Klasse:</strong> @schueler.Klasse
+                                <strong>Klasse:</strong> @schueler.Klassen
                             </p>
                             <div class="d-flex justify-content-between">
                                 <a href="@($"/Admin/Details?schuelerId={schueler.Id}")" class="btn btn-primary btn-sm">
@@ -55,7 +58,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        SchuelerListe = _adminLogic.GetAllSchueler();
+        SchuelerListe = _adminLogic.GetSchulerListe();
     }
 
     private void FilterSchueler(ChangeEventArgs e)

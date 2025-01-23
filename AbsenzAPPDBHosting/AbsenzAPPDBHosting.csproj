@@ -16,4 +16,26 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\RazorPages\Schuleransicht.razor" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Admin\AdminAlleSchueler.razor" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Admin\AdminDetailsSchueler.razor" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Admin\AdminPdfHochladen.razor" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Eltern\Elternansicht.razor" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Schuler\Schuleransicht.razor" />
+    <_ContentIncludedByDefault Remove="Views\Eltern\Elternansicht.razor" />
+    <_ContentIncludedByDefault Remove="Views\Schuler\Schuleransicht.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Shared\Admin\AdminAlleSchueler.razor" />
+    <AdditionalFiles Include="Views\Shared\Admin\AdminDetailsSchueler.razor" />
+    <AdditionalFiles Include="Views\Shared\Admin\AdminPdfHochladen.razor" />
+    <AdditionalFiles Include="Views\Shared\Eltern\Elternansicht.razor" />
+    <AdditionalFiles Include="Views\Shared\Lehrer\LehrerAbwesenheitSpeichern.razor" />
+    <AdditionalFiles Include="Views\Shared\Lehrer\LehrerAlleSchueler.razor" />
+    <AdditionalFiles Include="Views\Shared\Lehrer\LehrerSchuelerstatusAktualisieren.razor" />
+    <AdditionalFiles Include="Views\Shared\Schuler\Schuleransicht.razor" />
+  </ItemGroup>
+
 </Project>

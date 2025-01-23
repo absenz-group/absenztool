@@ -14,6 +14,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<SchulerLogic>();
 builder.Services.AddScoped<LehrerLogic>();
+builder.Services.AddScoped<AdminLogic>();
 
 var app = builder.Build();
 
@@ -26,6 +27,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.MapBlazorHub();
+app.MapControllers();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

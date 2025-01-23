@@ -1,6 +1,5 @@
-@using AbsenzAPPDBHosting.BusinessLogic2
+﻿@using AbsenzAPPDBHosting.BusinessLogic2
 @using AbsenzAPPDBHosting.Models
-@using AbsenzAPPDBHosting.Models.SchulerAbsenzUbersicht
 @namespace AbsenzAPPDBHosting.Views.Shared.RazorPages
 @inject SchulerLogic _schulerLogic;
 
@@ -50,10 +49,10 @@
                     <div class="card shadow-sm">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="card-title">Modul: <span class="fw-bold">@modul.ModulName</span></h5>
+                                <h5 class="card-title">Modul: <span class="fw-bold">@modul.Modul</span></h5>
                                 <p class="mb-0">
-                                    <span class="text-success">Entschuldigt: @modul.Entschuldigt</span> | 
-                                    <span class="text-danger">Unentschuldigt: @modul.Unentschuldigt</span>
+                                    <span class="text-success">Entschuldigt:</span> | 
+                                    <span class="text-danger">Unentschuldigt:</span>
                                 </p>
                             </div>
                             <a href="@($"/Entschuldigen?modulId={modul.Id}")" class="btn btn-primary btn-sm">
@@ -79,18 +78,18 @@
     string SchulerName;
     int EntschuldigtAnzahl;
     int UnentschuldigtAnzahl;
-    List<Modul> ModuleList;
+    List<Module> ModuleList;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        var schulerData = _schulerLogic.GetSchulerdata();
-        if (schulerData != null && schulerData.Count > 0)
+        var schulerData = _schulerLogic.GetData();
+        if (schulerData != null)
         {
-            SchulerName = schulerData.First().Name;
-            EntschuldigtAnzahl = schulerData.First().EntschuldigtAnzahl;
-            UnentschuldigtAnzahl = schulerData.First().UnentschuldigtAnzahl;
-            ModuleList = schulerData.First().ModuleList;
+            SchulerName = schulerData.Name;
+            EntschuldigtAnzahl = schulerData.EntschuldigtCount;
+            UnentschuldigtAnzahl = schulerData.UnentschuldigtCount;
+            ModuleList = schulerData.ModuleList;
         }
     }
 }
