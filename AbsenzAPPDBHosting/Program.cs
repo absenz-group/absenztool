@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<SchulerLogic>();
+builder.Services.AddScoped<LehrerLogic>();
 
 var app = builder.Build();
 

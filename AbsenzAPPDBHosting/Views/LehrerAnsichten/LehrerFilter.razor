@@ -1,0 +1,86 @@
+﻿@using AbsenzAPPDBHosting.Models
+@using AbsenzAPPDBHosting.BusinessLogic2
+@inject LehrerLogic _leherlogic
+
+<h3>LehrerFilter</h3>
+
+
+
+
+@if (_schulerliste != null)
+{
+	foreach (Schueler schuler in _schulerliste)
+	{
+		<button id="btn_@schuler.Id" @onclick="() => OpenModalAbsenzen(schuler.Id)"> @schuler.Name</button>
+		<br />
+	}
+}
+
+
+
+
+@if(_openModal)
+{
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Absenzen Setzen</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+						@foreach (Absenzgruende absenzgrund in _absenzGruendeListe)
+						{
+							<option value="@absenzgrund.Id">@absenzgrund.Grund</option>
+						}
+					</select>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+
+
+@code
+{
+
+	List<Schueler> _schulerliste;
+
+	List<Absenzgruende> _absenzGruendeListe;
+
+
+	bool _openModal;
+
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		_schulerliste = _leherlogic.GetSchulerListe();
+		_openModal = false;
+	}
+
+
+	public void OpenModalAbsenzen(int schulerId)
+	{
+		_openModal = true;
+
+		_absenzGruendeListe = _leherlogic.GetAbsenzgruende();
+
+
+
+
+		Absenzen absenz = new Absenzen();
+	}
+
+
+}
